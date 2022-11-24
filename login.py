@@ -22,7 +22,7 @@ def click_login():
             print("HOLA USUARIO")
             root.destroy()
             
-            os.system("python -u "+os.getcwdb()+"\\Applicacion\\ususarioABM.py")
+            os.system("python -u ./ususarioABM.py")
         else:
              lblEstado["text"]="La contraseña ingresada es incorrecta"
     else:
