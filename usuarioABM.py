@@ -1,11 +1,10 @@
 from tkinter import *
-import bcrypt as crypt
 import funciones as util
 import usuariosDao as usrDao
 
 def click_save():
     email=txtEmail.get()
-    if util.check(email):
+    if util.check(email) == False:
         lblEstado["text"]="Complete un email valido"
         txtEmail.focus()
         return
@@ -50,9 +49,9 @@ def click_cancel():
     lblEstado["text"]="Cancelando"
     
 
-root = Tk()
-root.title("ABM Usuarios")
-root.geometry("450x400")
+userAbm = Tk()
+userAbm.title("ABM Usuarios")
+userAbm.geometry("450x400")
 
 #----Inicio armado frm-------
 miFrame = Frame()
@@ -104,4 +103,4 @@ btnGuardar.grid(padx=5, row=8, column=0)
 btnCancelar.grid(padx=20, row=8, column=1)
 
 
-root.mainloop()
+userAbm.mainloop()

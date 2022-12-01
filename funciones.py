@@ -9,9 +9,9 @@ def validarFecha(fecha):
     lista=lista.replace("-", "/")
     barras=lista.count("/")
     if barras != 2:
-        return True
-    else:
         return False
+    else:
+        return True
 
 def check(email):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -19,10 +19,10 @@ def check(email):
     # and the string into the fullmatch() method
     if(re.fullmatch(regex, email)):
         print("Valid Email")
-        return False
+        return True
     else:
         print("Invalid Email")
-        return True
+        return False
     
 def encript(clave):
     
@@ -33,3 +33,5 @@ def chekPwd(clave, hashPwd):
         return True
     else:
 	    return False
+
+

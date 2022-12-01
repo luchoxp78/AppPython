@@ -20,9 +20,9 @@ def click_login():
     if usuario:
         if util.chekPwd(clave, usuario[3]):
             print("HOLA USUARIO")
-            root.destroy()
+            loggin.destroy()
             
-            os.system("python -u ./ususarioABM.py")
+            os.system('python ./usuarioABM.py')
         else:
              lblEstado["text"]="La contraseña ingresada es incorrecta"
     else:
@@ -36,9 +36,9 @@ def click_cancel():
     txtEmail.focus()
     lblEstado["text"]="Cancelando"
 
-root = Tk()
-root.title("Formulario de INgreso")
-root.geometry("450x200")
+loggin = Tk()
+loggin.title("Formulario de INgreso")
+loggin.geometry("450x200")
 #----Inicio armado frm-------
 miFrame = Frame()
 miFrame.pack()
@@ -64,4 +64,4 @@ btnCancelar=Button(miFrame, text="Cancelar", command=click_cancel, width=20)
 btnGuardar.grid(padx=5, row=8, column=0)
 btnCancelar.grid(padx=20, row=8, column=1)
 
-root.mainloop()
+loggin.mainloop()
