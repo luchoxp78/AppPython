@@ -1,4 +1,5 @@
 import sqlite3
+import funciones as util
 
 conn = sqlite3.connect("BaseDatos/appDB.db")
 
@@ -15,6 +16,7 @@ def createDB():
             direccion texto)""")
         
     except sqlite3.OperationalError:
+        util.addLog("La tabla ya existe en la base de datos")
         print ("La tabla ya existe en la db")
     finally:
         cursor.close()
@@ -30,9 +32,11 @@ def insertDB(datos):
         conn.commit()
         return "OK"
     except sqlite3.IntegrityError as ierr:
+        util.addLog(str(ierr))
         print("Error al insertar en tabla usuarios\n" + str(ierr))
         return str("El usuario ya existe")
     except sqlite3.Error as err:
+        util.addLog(str(err))
         print("Error al insertar en tabla usuarios\n" + str(err))
         return "Error al insertar"
     finally:
@@ -48,9 +52,11 @@ def updateDB(datos):
         conn.commit()
         return "OK"
     except sqlite3.IntegrityError as ierr:
+        util.addLog(str(ierr))
         print("Error al insertar en tabla usuarios\n" + str(ierr))
         return str("El usuario ya existe")
     except sqlite3.Error as err:
+        util.addLog(str(err))
         print("Error al insertar en tabla usuarios\n" + str(err))
         return "Error al actualizar"
     finally:
@@ -66,7 +72,8 @@ def getUsuario(email, usr="email"):
             cursor.execute("SELECT * FROM usuario WHERE nombreUsuario=?", (email,))
         
         return cursor.fetchone()
-    except sqlite3.OperationalError:
+    except sqlite3.Error as err:
+        util.addLog(str(err))
         print("Error al consultar en tabla usuarios")
     finally:
         cursor.close()

@@ -1,6 +1,6 @@
 import re
 import bcrypt as crypt
-
+import datetime as date
 
 mySalt=crypt.gensalt()
 
@@ -34,4 +34,9 @@ def chekPwd(clave, hashPwd):
     else:
 	    return False
 
-
+def addLog(mensaje):
+    x = date.datetime.now()
+    fecha= x.strftime("%d")+'/'+x.strftime('%m')+'/'+x.strftime('%Y')+' '+x.strftime('%H')+':'+x.strftime('%M')+':'+x.strftime('%S')
+    archivo=open("log/log_app.log","a")
+    archivo.write(fecha+' '+mensaje+"\n")
+    archivo.close()

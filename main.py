@@ -1,4 +1,4 @@
-from tkinter import *  
+from tkinter import * 
 import os
 import usuariosDao as usrDao
 import funciones as util

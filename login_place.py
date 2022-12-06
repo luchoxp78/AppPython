@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import ImageTk, Image
 import usuariosDao as usrDao
 import funciones as util
 import os
@@ -54,6 +55,13 @@ def click_cancel():
 loggin = Tk()
 loggin.title("Formulario de Ingreso")
 loggin.geometry("450x200")
+
+#----Label on imagen --------
+imagen=Image.open("Imagenes/user-login-icon.png")
+img_resize=imagen.resize((106, 121))
+img = ImageTk.PhotoImage(img_resize)
+lblImagen=Label(image=img)
+lblImagen.place(y=10, x=330)
 #----Inicio armado frm-------
 lblTitulo=Label(text="Ingreso")
 lblTitulo.place(y=10, x=200)
@@ -62,19 +70,18 @@ lblTitulo.config(font=("Arial", 16))
 lblEmail=Label(text="Usuario/Email:")
 lblEmail.config(justify='right')
 lblEmail.place(y=45, x=20)
-txtEmail = Entry(width=40)
+txtEmail = Entry(width=30)
 txtEmail.place(y=45, x=110)
 #----- Seccion Contraseña --------
-lblContraseña=Label(text="Contraseña:")
-lblContraseña.config(justify='right')
+lblContraseña=Label(text="Contraseña:",justify="center")
 lblContraseña.place(y=85, x=20)
-txtPassword = Entry(width=40, show="*")
+txtPassword = Entry(width=30, show="*")
 txtPassword.place(y=85, x=110)
 lblEstado=Label(text="")
 lblEstado.config(font=("Arial", 14))
 lblEstado.place(y=130, x=30)
-btnGuardar=Button(text="Ingresar", command=click_login, width=20, bg="green", font=("Arial", 12))
-btnCancelar=Button(text="Cancelar", command=click_cancel, width=20, bg="red", font=("Arial", 12))
+btnGuardar=Button(text="Ingresar", command=click_login, width=20, bg="#5DDA59", font=("Arial", 12))
+btnCancelar=Button(text="Cancelar", command=click_cancel, width=20, bg="#EC4B32", font=("Arial", 12))
 btnGuardar.place(y=160, x=20)
 btnCancelar.place(y=160, x=220)
 txtEmail.focus()
