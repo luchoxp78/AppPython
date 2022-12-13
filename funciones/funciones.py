@@ -18,10 +18,8 @@ def check(email):
     # pass the regular expression
     # and the string into the fullmatch() method
     if(re.fullmatch(regex, email)):
-        print("Valid Email")
         return True
     else:
-        print("Invalid Email")
         return False
     
 def encript(clave):
@@ -34,9 +32,9 @@ def chekPwd(clave, hashPwd):
     else:
 	    return False
 
-def addLog(mensaje):
+def addLog(mensaje, tipo):
     x = date.datetime.now()
     fecha= x.strftime("%d")+'/'+x.strftime('%m')+'/'+x.strftime('%Y')+' '+x.strftime('%H')+':'+x.strftime('%M')+':'+x.strftime('%S')
     archivo=open("log/log_app.log","a")
-    archivo.write(fecha+' '+mensaje+"\n")
+    archivo.write(fecha+' - '+tipo+' - '+mensaje+"\n")
     archivo.close()

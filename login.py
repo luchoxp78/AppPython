@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter import messagebox
+from PIL import ImageTk, Image
 import usuariosDao as usrDao
 import funciones as util
 import os
@@ -6,62 +8,81 @@ import os
 
 def click_login():
     email=txtEmail.get()
-    if util.check(email):
-        lblEstado["text"]="Complete un email valido"
-        txtEmail.focus()
-        return
+    if email.count("@") == 1:
+        if util.check(email) == False:
+            messagebox.showwarning(title="Loggin", message="Ingrese un email valido")
+            txtEmail.focus()
+            return
+    else:
+        if email.__len__() < 4:
+            messagebox.showwarning(title="Loggin", message="El usuario debe tener al menos 4 caracteres")
+            txtEmail.focus()
+            return
     clave=txtPassword.get()
     if clave.__len__() < 6:
-        lblEstado["text"]="La contraseña debe tener al menos 6 caracteres"
+        messagebox.showwarning(title="Loggin", message="La contraseña debe tener al menos 6 caracteres")
         txtPassword.focus()
         return
-    usuario=usrDao.getUsuario(email)
+    usuario=False
+    if email.count("@") == 1:
+        usuario=usrDao.getUsuario(email)
+    else:
+        usuario=usrDao.getUsuario(email, "usr")
     print(usuario)
     if usuario:
-        if util.chekPwd(clave, usuario[3]):
-            print("HOLA USUARIO")
+        if util.chekPwd(clave, usuario[4]):
             loggin.destroy()
-            
-            os.system('python ./usuarioABM.py')
+            os.system('python ./main.py')
         else:
-             lblEstado["text"]="La contraseña ingresada es incorrecta"
+            messagebox.showwarning(title="Loggin", message="La contraseña ingresada es incorrecta")
     else:
-         lblEstado["text"]="El Usuario no existe, verifique los datos"
-         txtEmail.focus()
-         return
+        messagebox.showwarning(title="Loggin", message="El usuario no existe, verifique los datos")
+        txtEmail.focus()
+        click_cancel()
+        return
 
 def click_cancel():
     txtEmail.delete(0, END)
     txtPassword.delete(0, END)
     txtEmail.focus()
-    lblEstado["text"]="Cancelando"
 
 loggin = Tk()
-loggin.title("Formulario de INgreso")
+loggin.title("Formulario de Ingreso")
 loggin.geometry("450x200")
+loggin.resizable(0, 0)
+wtotal = loggin.winfo_screenwidth()
+htotal = loggin.winfo_screenheight()
+wventana = 450
+hventana = 200
+pwidth = round(wtotal/2-wventana/2)
+pheight = round(htotal/2-hventana/2)
+loggin.geometry(str(wventana)+"x"+str(hventana)+"+"+str(pwidth)+"+"+str(pheight))
+
+#----Label on imagen --------
+imagen=Image.open("Imagenes/user-login-icon.png")
+img_resize=imagen.resize((106, 121))
+img = ImageTk.PhotoImage(img_resize)
+lblImagen=Label(image=img)
+lblImagen.place(y=10, x=330)
 #----Inicio armado frm-------
-miFrame = Frame()
-miFrame.pack()
-lblTitulo=Label(miFrame, text="Ingreso")
-lblTitulo.grid(row=0, column=0, columnspan=2)
+lblTitulo=Label(text="Ingreso")
+lblTitulo.place(y=10, x=200)
 lblTitulo.config(font=("Arial", 16))
 #----- Seccion Email --------
-lblEmail=Label(miFrame, text="Email:")
-lblEmail.grid(row=1, column=0)
-lblEmail.config(padx=10, pady=10)
-txtEmail = Entry(miFrame, width=40)
-txtEmail.grid(pady=5, row=1, column=1)
+lblEmail=Label(text="Usuario/Email:")
+lblEmail.config(justify='right')
+lblEmail.place(y=45, x=20)
+txtEmail = Entry(width=30)
+txtEmail.place(y=45, x=110)
 #----- Seccion Contraseña --------
-lblContraseña=Label(miFrame, text="Contraseña:")
-lblContraseña.grid(row=4, column=0)
-lblContraseña.config(padx=10, pady=10)
-txtPassword = Entry(miFrame, width=40, show="*")
-txtPassword.grid(pady=5, row=4, column=1)
-lblEstado=Label(miFrame, text="")
-lblEstado.grid(padx=5, pady=5, row=7, column=0, columnspan=2)
-btnGuardar=Button(miFrame, text="Ingresar", command=click_login, width=20)
-btnCancelar=Button(miFrame, text="Cancelar", command=click_cancel, width=20)
-btnGuardar.grid(padx=5, row=8, column=0)
-btnCancelar.grid(padx=20, row=8, column=1)
+lblContraseña=Label(text="Contraseña:",justify="center")
+lblContraseña.place(y=85, x=20)
+txtPassword = Entry(width=30, show="*")
+txtPassword.place(y=85, x=110)
+btnGuardar=Button(text="Ingresar", command=click_login, width=20, bg="#5DDA59", font=("Arial", 12))
+btnCancelar=Button(text="Cancelar", command=click_cancel, width=20, bg="#EC4B32", font=("Arial", 12))
+btnGuardar.place(y=160, x=20)
+btnCancelar.place(y=160, x=220)
+txtEmail.focus()
 
 loggin.mainloop()
