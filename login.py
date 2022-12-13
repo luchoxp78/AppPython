@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk, Image
 import usuariosDao as usrDao
-import funciones as util
+import funciones.funciones as util
 import os
 
 
